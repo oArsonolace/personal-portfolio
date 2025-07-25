@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexander Knapp - CS & EE Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        // Custom Tailwind configuration for semiconductor/PCB color scheme
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'circuit-green': '#00FF41',
+                        'pcb-green': '#1B4D3E',
+                        'copper': '#B87333',
+                        'silicon-blue': '#4A90E2',
+                        'dark-pcb': '#0A1A0E',
+                        'trace-gold': '#FFD700',
+                        'solder-silver': '#C0C0C0'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'trace-flow': 'trace-flow 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'trace-flow': {
+                            '0%, 100%': { opacity: '0.3' },
+                            '50%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for creative effects */
+        .circuit-pattern {
+            background-image: 
+                linear-gradient(90deg, rgba(0,255,65,0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0,255,65,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .pcb-card {
+            background: linear-gradient(135deg, #1B4D3E 0%, #0A1A0E 100%);
+            border: 2px solid #00FF41;
+            position: relative;
+        }
+        
+        .pcb-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00FF41, #4A90E2, #FFD700, #00FF41);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .trace-line {
+            background: linear-gradient(90deg, transparent, #00FF41, transparent);
+            height: 2px;
+            animation: trace-flow 3s ease-in-out infinite;
+        }
+        
+        .solder-point {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #C0C0C0, #999);
+            box-shadow: 0 0 10px rgba(192,192,192,0.8);
+        }
+    </style>
+</head>
+<body class="bg-dark-pcb text-white overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-dark-pcb/90 backdrop-blur-sm border-b border-circuit-green/30">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-circuit-green">
+                    <span class="text-trace-gold">Alexander</span>K
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-circuit-green transition-colors">Home</a>
+                    <a href="#about" class="hover:text-circuit-green transition-colors">About</a>
+                    <a href="#skills" class="hover:text-circuit-green transition-colors">Skills</a>
+                    <a href="#projects" class="hover:text-circuit-green transition-colors">Projects</a>
+                    <a href="#contact" class="hover:text-circuit-green transition-colors">Contact</a>
+                </div>
+                <!-- Mobile menu button -->
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-circuit-green text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative circuit-pattern">
+        <!-- Animated circuit traces -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="trace-line absolute top-1/4 left-0 w-full"></div>
+            <div class="trace-line absolute top-2/4 right-0 w-3/4" style="animation-delay: 1s;"></div>
+            <div class="trace-line absolute top-3/4 left-0 w-1/2" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <div class="mb-6">
+                        <span class="text-circuit-green text-lg font-mono">&lt;hello_world&gt;</span>
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                        Hi, I'm <span class="text-trace-gold animate-pulse-slow">Alexander</span>
+                    </h1>
+                    <h2 class="text-2xl lg:text-3xl text-silicon-blue mb-6">
+                        A Computer Science & Electrical Engineering Student
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        I’m a third-year college student currently pursuing a dual academic path in Computer Science and Electrical Engineering here in sunny Florida.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button onclick="scrollToSection('projects')" class="bg-circuit-green text-dark-pcb px-8 py-3 rounded-full font-bold hover:bg-trace-gold transition-all transform hover:scale-105">
+                            View My Work
+                        </button>
+                        <button onclick="scrollToSection('contact')" class="border-2 border-silicon-blue text-silicon-blue px-8 py-3 rounded-full font-bold hover:bg-silicon-blue hover:text-white transition-all">
+                            Get In Touch
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Creative Profile Image with PCB Design -->
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <!-- PCB-style frame -->
+                        <div class="w-80 h-80 pcb-card rounded-3xl p-8 relative">
+                            <!-- Solder points -->
+                            <div class="solder-point absolute top-4 left-4"></div>
+                            <div class="solder-point absolute top-4 right-4"></div>
+                            <div class="solder-point absolute bottom-4 left-4"></div>
+                            <div class="solder-point absolute bottom-4 right-4"></div>
+                            
+                            <!-- Profile placeholder -->
+                            <div class="w-full h-full flex items-center justify-center">
+                                <img src="images/alexander-knapp.png" alt="Alexander Knapp" class="w-56 h-56 object-cover rounded-full shadow-lg border-4 border-circuit-green" />
+                            </div>
+                            
+                            <!-- Floating elements -->
+                            <div class="absolute -top-4 -right-4 bg-trace-gold text-dark-pcb p-3 rounded-full animate-bounce-slow">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="absolute -bottom-4 -left-4 bg-circuit-green text-dark-pcb p-3 rounded-full animate-bounce-slow" style="animation-delay: 1s;">
+                                <i class="fas fa-code"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-pcb-green/20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16">
+                    About <span class="text-circuit-green">Me</span>
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-trace-gold mb-6">My Journey</h3>
+                        <p class="text-gray-300 mb-4 leading-relaxed">
+                            Growing up surrounded by technology, I spent my childhood taking apart game controllers 
+                            and figuring out how everything worked under the hood. That curiosity led me to pursue 
+                            Computer Science, where I fell in love with software development.
+                        </p>
+                        <p class="text-gray-300 mb-4 leading-relaxed">
+                            Now in my third year, I'm expanding on my education by pursuing a Master's in Electrical Engineering. 
+                            I'm fascinated by semiconductors, photonics, and PCB design - the microscopic world where 
+                            digital systems come to life.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            My goal is to deeply understand the connection between both the software and hardware, creating meaningful, 
+                            efficient, and scalable tech solutions.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Education Card -->
+                        <div class="pcb-card rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-graduation-cap text-trace-gold text-2xl mr-4"></i>
+                                <h4 class="text-xl font-bold">Education</h4>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-circuit-green font-semibold">Master's in Electrical Engineering</p>
+                                <p class="text-gray-300">Currently Pursuing • Florida</p>
+                                <p class="text-silicon-blue font-semibold">Bachelor's in Computer Science</p>
+                                <p class="text-gray-300">Third Year • Florida</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Interests Card -->
+                        <div class="pcb-card rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-heart text-trace-gold text-2xl mr-4"></i>
+                                <h4 class="text-xl font-bold">Interests</h4>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-circuit-green/20 text-circuit-green px-3 py-1 rounded-full text-sm">Gaming</span>
+                                <span class="bg-silicon-blue/20 text-silicon-blue px-3 py-1 rounded-full text-sm">Circuit Design</span>
+                                <span class="bg-trace-gold/20 text-trace-gold px-3 py-1 rounded-full text-sm">Web Dev</span>
+                                <span class="bg-copper/20 text-copper px-3 py-1 rounded-full text-sm">Emerging Tech</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                My <span class="text-circuit-green">Skills</span>
+            </h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Software Skills -->
+                <div class="pcb-card rounded-2xl p-8">
+                    <div class="flex items-center mb-8">
+                        <i class="fas fa-code text-circuit-green text-3xl mr-4"></i>
+                        <h3 class="text-2xl font-bold">Software Development</h3>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="skill-item flex items-center mb-6">
+                            <div class="bg-dark-pcb/80 rounded-lg p-4 flex-1 mr-4 text-left">
+                                <span class="text-trace-gold block font-semibold mb-1">Frontend Development</span>
+                                <p class="text-sm text-gray-400">React, HTML, CSS, Tailwind CSS, JavaScript</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 justify-end items-center min-w-[120px]">
+                                <i class="fab fa-react text-circuit-green text-3xl" title="React"></i>
+                                <i class="fab fa-html5 text-trace-gold text-3xl" title="HTML5"></i>
+                                <i class="fab fa-css3-alt text-silicon-blue text-3xl" title="CSS3"></i>
+                                <i class="fab fa-js-square text-copper text-3xl" title="JavaScript"></i>
+                                <span class="text-circuit-green text-2xl font-bold border border-circuit-green rounded px-1" title="Tailwind CSS">Tw</span>
+                            </div>
+                        </div>
+                        <div class="skill-item flex items-center mb-6">
+                            <div class="bg-dark-pcb/80 rounded-lg p-4 flex-1 mr-4 text-left">
+                                <span class="text-trace-gold block font-semibold mb-1">Backend Development</span>
+                                <p class="text-sm text-gray-400">Node.js, Express, RESTful APIs</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 justify-end items-center min-w-[120px]">
+                                <i class="fab fa-node-js text-circuit-green text-3xl" title="Node.js"></i>
+                                <i class="fas fa-server text-trace-gold text-3xl" title="Express"></i>
+                                <i class="fas fa-plug text-silicon-blue text-3xl" title="RESTful APIs"></i>
+                            </div>
+                        </div>
+                        <div class="skill-item flex items-center mb-6">
+                            <div class="bg-dark-pcb/80 rounded-lg p-4 flex-1 mr-4 text-left">
+                                <span class="text-trace-gold block font-semibold mb-1">Database Management</span>
+                                <p class="text-sm text-gray-400">PostgreSQL, MongoDB</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 justify-end items-center min-w-[120px]">
+                                <i class="fas fa-database text-circuit-green text-3xl" title="PostgreSQL"></i>
+                                <i class="fas fa-leaf text-silicon-blue text-3xl" title="MongoDB"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hardware Skills -->
+                <div class="pcb-card rounded-2xl p-8">
+                    <div class="flex items-center mb-8">
+                        <i class="fas fa-microchip text-silicon-blue text-3xl mr-4"></i>
+                        <h3 class="text-2xl font-bold">Hardware Engineering</h3>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="skill-item flex items-center mb-6">
+                            <div class="bg-dark-pcb/80 rounded-lg p-4 flex-1 mr-4 text-left">
+                                <span class="text-trace-gold block font-semibold mb-1">Circuit Analysis & Design</span>
+                                <p class="text-sm text-gray-400">Analog & Digital Circuits, SPICE</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 justify-end items-center min-w-[120px]">
+                                <i class="fas fa-bolt text-circuit-green text-3xl" title="Analog Circuits"></i>
+                                <i class="fas fa-microchip text-silicon-blue text-3xl" title="Digital Circuits"></i>
+                                <span class="text-trace-gold text-2xl font-bold border border-trace-gold rounded px-1" title="SPICE">SP</span>
+                            </div>
+                        </div>
+                        <div class="skill-item flex items-center mb-6">
+                            <div class="bg-dark-pcb/80 rounded-lg p-4 flex-1 mr-4 text-left">
+                                <span class="text-trace-gold block font-semibold mb-1">PCB Design</span>
+                                <p class="text-sm text-gray-400">Schematic Design, Layout, Prototyping</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 justify-end items-center min-w-[120px]">
+                                <i class="fas fa-project-diagram text-circuit-green text-3xl" title="Schematic Design"></i>
+                                <i class="fas fa-layer-group text-silicon-blue text-3xl" title="Layout"></i>
+                                <i class="fas fa-tools text-copper text-3xl" title="Prototyping"></i>
+                            </div>
+                        </div>
+                        <div class="skill-item flex items-center mb-6">
+                            <div class="bg-dark-pcb/80 rounded-lg p-4 flex-1 mr-4 text-left">
+                                <span class="text-trace-gold block font-semibold mb-1">Semiconductors & Photonics</span>
+                                <p class="text-sm text-gray-400">Device Physics, Signal Processing</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 justify-end items-center min-w-[120px]">
+                                <i class="fas fa-atom text-silicon-blue text-3xl" title="Device Physics"></i>
+                                <i class="fas fa-wave-square text-trace-gold text-3xl" title="Signal Processing"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-pcb-green/10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Featured <span class="text-circuit-green">Projects</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Smart Home IoT Controller -->
+                <div class="pcb-card rounded-xl p-6 group hover:scale-105 transition-transform duration-300">
+                    <div class="mb-4">
+                        <div class="w-full h-48 bg-gradient-to-br from-circuit-green/20 to-silicon-blue/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-home text-4xl text-circuit-green"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Smart Home IoT Controller</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Full-stack web application with custom PCB design for controlling smart home devices. 
+                            Features real-time sensor monitoring and automated control systems.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-circuit-green/20 text-circuit-green px-2 py-1 rounded text-xs">React</span>
+                            <span class="bg-silicon-blue/20 text-silicon-blue px-2 py-1 rounded text-xs">Node.js</span>
+                            <span class="bg-trace-gold/20 text-trace-gold px-2 py-1 rounded text-xs">Arduino</span>
+                            <span class="bg-copper/20 text-copper px-2 py-1 rounded text-xs">PCB Design</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="text-circuit-green hover:text-trace-gold transition-colors">
+                                <i class="fab fa-github"></i> Code
+                            </button>
+                            <button class="text-silicon-blue hover:text-trace-gold transition-colors">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Neural Network Visualizer -->
+                <div class="pcb-card rounded-xl p-6 group hover:scale-105 transition-transform duration-300">
+                    <div class="mb-4">
+                        <div class="w-full h-48 bg-gradient-to-br from-trace-gold/20 to-silicon-blue/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-brain text-4xl text-trace-gold"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Neural Network Visualizer</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Interactive web application for visualizing neural network architectures and training processes. 
+                            Built with React and TensorFlow.js for real-time learning visualization.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-circuit-green/20 text-circuit-green px-2 py-1 rounded text-xs">React</span>
+                            <span class="bg-silicon-blue/20 text-silicon-blue px-2 py-1 rounded text-xs">TensorFlow.js</span>
+                            <span class="bg-trace-gold/20 text-trace-gold px-2 py-1 rounded text-xs">D3.js</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="text-circuit-green hover:text-trace-gold transition-colors">
+                                <i class="fab fa-github"></i> Code
+                            </button>
+                            <button class="text-silicon-blue hover:text-trace-gold transition-colors">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Circuit Simulator -->
+                <div class="pcb-card rounded-xl p-6 group hover:scale-105 transition-transform duration-300">
+                    <div class="mb-4">
+                        <div class="w-full h-48 bg-gradient-to-br from-copper/20 to-circuit-green/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-microchip text-4xl text-copper"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Circuit Simulator Web App</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Browser-based circuit simulation tool for educational purposes. Features drag-and-drop 
+                            components, real-time analysis, and interactive tutorials.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-circuit-green/20 text-circuit-green px-2 py-1 rounded text-xs">JavaScript</span>
+                            <span class="bg-silicon-blue/20 text-silicon-blue px-2 py-1 rounded text-xs">Canvas API</span>
+                            <span class="bg-trace-gold/20 text-trace-gold px-2 py-1 rounded text-xs">WebGL</span>
+                            <span class="bg-copper/20 text-copper px-2 py-1 rounded text-xs">SPICE</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="text-circuit-green hover:text-trace-gold transition-colors">
+                                <i class="fab fa-github"></i> Code
+                            </button>
+                            <button class="text-silicon-blue hover:text-trace-gold transition-colors">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- E-Commerce Platform -->
+                <div class="pcb-card rounded-xl p-6 group hover:scale-105 transition-transform duration-300">
+                    <div class="mb-4">
+                        <div class="w-full h-48 bg-gradient-to-br from-silicon-blue/20 to-trace-gold/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-shopping-cart text-4xl text-silicon-blue"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Fullstack E-Commerce Platform</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Complete e-commerce solution with user authentication, payment processing, 
+                            inventory management, and admin dashboard. Built with modern web technologies.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-circuit-green/20 text-circuit-green px-2 py-1 rounded text-xs">React</span>
+                            <span class="bg-silicon-blue/20 text-silicon-blue px-2 py-1 rounded text-xs">Node.js</span>
+                            <span class="bg-trace-gold/20 text-trace-gold px-2 py-1 rounded text-xs">MongoDB</span>
+                            <span class="bg-copper/20 text-copper px-2 py-1 rounded text-xs">Stripe</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="text-circuit-green hover:text-trace-gold transition-colors">
+                                <i class="fab fa-github"></i> Code
+                            </button>
+                            <button class="text-silicon-blue hover:text-trace-gold transition-colors">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- LED Matrix Controller -->
+                <div class="pcb-card rounded-xl p-6 group hover:scale-105 transition-transform duration-300">
+                    <div class="mb-4">
+                        <div class="w-full h-48 bg-gradient-to-br from-circuit-green/20 to-copper/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-lightbulb text-4xl text-circuit-green"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">LED Matrix Controller</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Custom PCB design with embedded programming for controlling large LED matrices. 
+                            Features wireless connectivity and mobile app control interface.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-circuit-green/20 text-circuit-green px-2 py-1 rounded text-xs">C++</span>
+                            <span class="bg-silicon-blue/20 text-silicon-blue px-2 py-1 rounded text-xs">ESP32</span>
+                            <span class="bg-trace-gold/20 text-trace-gold px-2 py-1 rounded text-xs">KiCad</span>
+                            <span class="bg-copper/20 text-copper px-2 py-1 rounded text-xs">React Native</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="text-circuit-green hover:text-trace-gold transition-colors">
+                                <i class="fab fa-github"></i> Code
+                            </button>
+                            <button class="text-silicon-blue hover:text-trace-gold transition-colors">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Real-time Chat App -->
+                <div class="pcb-card rounded-xl p-6 group hover:scale-105 transition-transform duration-300">
+                    <div class="mb-4">
+                        <div class="w-full h-48 bg-gradient-to-br from-trace-gold/20 to-circuit-green/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-comments text-4xl text-trace-gold"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Real-time Chat Application</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Modern chat application with real-time messaging, file sharing, and video calls. 
+                            Features end-to-end encryption and responsive design for all devices.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-circuit-green/20 text-circuit-green px-2 py-1 rounded text-xs">React</span>
+                            <span class="bg-silicon-blue/20 text-silicon-blue px-2 py-1 rounded text-xs">Socket.io</span>
+                            <span class="bg-trace-gold/20 text-trace-gold px-2 py-1 rounded text-xs">WebRTC</span>
+                            <span class="bg-copper/20 text-copper px-2 py-1 rounded text-xs">PostgreSQL</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="text-circuit-green hover:text-trace-gold transition-colors">
+                                <i class="fab fa-github"></i> Code
+                            </button>
+                            <button class="text-silicon-blue hover:text-trace-gold transition-colors">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16">
+                    Let's <span class="text-circuit-green">Connect</span>
+                </h2>
+                
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Contact Info -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-trace-gold mb-6">Get In Touch</h3>
+                        <p class="text-gray-300 mb-8 leading-relaxed">
+                            I'm always open to discussing exciting projects, learning about best practices, 
+                            or collaborating on innovative solutions. Whether you're interested in software development, 
+                            hardware engineering, or just want to geek out over cool tech ideas, feel free to reach out!
+                        </p>
+                        
+                        <!-- Social Links -->
+                        <div class="space-y-4">
+                            <a href="https://linkedin.com/in/#" target="_blank" 
+                               class="flex items-center space-x-4 p-4 pcb-card rounded-lg hover:scale-105 transition-transform group">
+                                <div class="bg-silicon-blue p-3 rounded-full group-hover:bg-trace-gold transition-colors">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-silicon-blue group-hover:text-trace-gold transition-colors">LinkedIn</h4>
+                                    <p class="text-gray-400 text-sm">#</p>
+                                </div>
+                            </a>
+                            
+                            <a href="https://github.com/#" target="_blank" 
+                               class="flex items-center space-x-4 p-4 pcb-card rounded-lg hover:scale-105 transition-transform group">
+                                <div class="bg-circuit-green p-3 rounded-full group-hover:bg-trace-gold transition-colors">
+                                    <i class="fab fa-github text-xl text-dark-pcb"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-circuit-green group-hover:text-trace-gold transition-colors">GitHub</h4>
+                                    <p class="text-gray-400 text-sm">#</p>
+                                </div>
+                            </a>
+                            
+                            <a href="https://instagram.com/#" target="_blank" 
+                               class="flex items-center space-x-4 p-4 pcb-card rounded-lg hover:scale-105 transition-transform group">
+                                <div class="bg-gradient-to-br from-pink-500 to-yellow-500 p-3 rounded-full group-hover:bg-trace-gold transition-all">
+                                    <i class="fab fa-instagram text-xl text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-pink-400 group-hover:text-trace-gold transition-colors">Instagram</h4>
+                                    <p class="text-gray-400 text-sm">#</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Form -->
+                    <div class="pcb-card rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">Send Me a Message</h3>
+                        <form class="space-y-6" onsubmit="handleSubmit(event)">
+                            <div>
+                                <label for="name" class="block text-circuit-green font-semibold mb-2">Name</label>
+                                <input type="text" id="name" name="name" required
+                                       class="w-full bg-dark-pcb border-2 border-circuit-green/30 rounded-lg px-4 py-3 text-white focus:border-circuit-green focus:outline-none transition-colors">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-circuit-green font-semibold mb-2">Email</label>
+                                <input type="email" id="email" name="email" required
+                                       class="w-full bg-dark-pcb border-2 border-circuit-green/30 rounded-lg px-4 py-3 text-white focus:border-circuit-green focus:outline-none transition-colors">
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block text-circuit-green font-semibold mb-2">Subject</label>
+                                <input type="text" id="subject" name="subject" required
+                                       class="w-full bg-dark-pcb border-2 border-circuit-green/30 rounded-lg px-4 py-3 text-white focus:border-circuit-green focus:outline-none transition-colors">
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-circuit-green font-semibold mb-2">Message</label>
+                                <textarea id="message" name="message" rows="4" required
+                                          class="w-full bg-dark-pcb border-2 border-circuit-green/30 rounded-lg px-4 py-3 text-white focus:border-circuit-green focus:outline-none transition-colors resize-none"></textarea>
+                            </div>
+                            
+                            <button type="submit" 
+                                    class="w-full bg-circuit-green text-dark-pcb font-bold py-3 rounded-lg hover:bg-trace-gold transition-all transform hover:scale-105">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-pcb border-t border-circuit-green/30 py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="text-2xl font-bold text-circuit-green mb-2">
+                        <span class="text-trace-gold">Alexander</span>K
+                    </div>
+                    <p class="text-gray-400">Computer Science & Electrical Engineering Student</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="https://linkedin.com/in/#" target="_blank" 
+                       class="text-silicon-blue hover:text-trace-gold transition-colors text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/#" target="_blank" 
+                       class="text-circuit-green hover:text-trace-gold transition-colors text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://instagram.com/#" target="_blank" 
+                       class="text-pink-400 hover:text-trace-gold transition-colors text-xl">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-circuit-green/20 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2024 Alexander Knapp. Designed with 
+                    <span class="text-circuit-green"><i class="fas fa-heart"></i></span> 
+                    and lots of coffee.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-dark-pcb/95 backdrop-blur-sm z-50 hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-circuit-green text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="#home" onclick="toggleMobileMenu()" class="text-2xl hover:text-circuit-green transition-colors">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="text-2xl hover:text-circuit-green transition-colors">About</a>
+            <a href="#skills" onclick="toggleMobileMenu()" class="text-2xl hover:text-circuit-green transition-colors">Skills</a>
+            <a href="#projects" onclick="toggleMobileMenu()" class="text-2xl hover:text-circuit-green transition-colors">Projects</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="text-2xl hover:text-circuit-green transition-colors">Contact</a>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Contact form handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Simulate form submission (replace with actual endpoint)
+            alert(`Thank you, ${name}! Your message has been sent. I'll get back to you soon!`);
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-dark-pcb/95');
+            } else {
+                nav.classList.remove('bg-dark-pcb/95');
+            }
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+            
+            // First section should be visible immediately
+            const firstSection = document.querySelector('#home');
+            if (firstSection) {
+                firstSection.style.opacity = '1';
+                firstSection.style.transform = 'translateY(0)';
+            }
+        });
+
+        // Add typing effect to hero text
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const codeElement = document.querySelector('#home span');
+                if (codeElement) {
+                    typeWriter(codeElement, '&lt;hello_world&gt;', 150);
+                }
+            }, 1000);
+        });
+
+        // Add particle effect for background
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'absolute w-1 h-1 bg-circuit-green rounded-full opacity-50';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = '100%';
+            particle.style.animation = `float-up ${3 + Math.random() * 4}s linear infinite`;
+            
+            document.body.appendChild(particle);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 7000);
+        }
+
+        // Add CSS for particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float-up {
+                from {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 0.5;
+                }
+                to {
+                    transform: translateY(-100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create particles periodically
+        setInterval(createParticle, 2000);
+    </script>
+</body>
+</html>
